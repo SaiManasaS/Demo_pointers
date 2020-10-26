@@ -9,6 +9,8 @@
  * Initial version     : Oct 19th, 2020
  * Added more functions: Oct 20th, 2020
  * Added more functions: Oct 21st, 2020
+ * Added more functions: Oct 22nd, 2020
+ * Added more functions: Oct 26th, 2020
  */
 
 /*
@@ -33,12 +35,23 @@
 
 using namespace std;
 
+typedef struct my_structure
+{
+	char my_firststr[3][10];
+	int i;
+};
+
 int guest_multiply(int in_a, int in_b)
 {
 	return (in_a * in_b);
 }
 
-int host(int (pf)(int a, int b)) // Learn to use this syntax
+int guest_add(int in_a, int in_b)
+{
+	return (in_a + in_b);
+}
+
+int host(int (*pf)(int a, int b)) // Learn to use this syntax
 {
 	int ret_val = pf(12, 13);
 	return ret_val;
@@ -49,12 +62,37 @@ int guest_func2(int x, int y)
 	return (x+y);
 }
 
-int host_func2(int (*pf)(int, int))
+int host_func2(int (pf)(int, int))
 {
 	int a = 10, b = 20;
 	int ret_val = (pf) (a, b);
 	cout << "Inside the host function2" << endl;
 	return ret_val;
+}
+
+void demo_arrofstrings()
+{
+	char my_firststr[3][10];
+	int i;
+
+	char *my_secondstr[10];
+
+	my_structure m1;
+
+	for(i = 0; i < 3; i++)
+	{
+		cout << "Enter a 9 length string" << endl;
+		cin >> my_firststr[i];
+	}
+	cout << "sizeof(my_firststr): " << sizeof(my_firststr) << endl;
+	cout << "sizeof(m1): " << sizeof(m1) << endl;
+
+	for(i = 0; i < 3; i++)
+	{
+		cout << "Enter a 9 length string" << endl;
+		cin >> my_firststr[i];
+	}
+	cout << "sizeof(my_firststr): " << sizeof(my_firststr) << endl;
 }
 
 /*****************************************************/
@@ -215,13 +253,17 @@ void main()
 	//demo_ptrarrays();
 
 	demo_doubleDarr();
-*/
+
 	ret_val = host(guest_multiply);
+	cout << "ret_val:" << ret_val << endl;
+
+	ret_val = host(guest_add);
 	cout << "ret_val:" << ret_val << endl;
 
 	a = host_func2(guest_func2);
 	cout << "a after experimenting with passing pointer to function:" << a << endl;
-
+*/
+	demo_arrofstrings();
 
 	while(1);
 }
